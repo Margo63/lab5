@@ -1,32 +1,64 @@
-import React from "react";
+import React, {useEffect} from "react";
 import ReactDOM from "react-dom";
 import {BrowserRouter, Routes, Route, Link} from "react-router-dom";
 import App from "./App";
+import axios from "axios";
+import BrokersComponent from "./brokers.component";
+
 
 function BasicExample() {
     return (<BrowserRouter>
         <div>
             <ul>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/about">About</Link></li>
+                <li><Link to="/">Brokers</Link></li>
+                <li><Link to="/about">Stocks</Link></li>
             </ul>
             <hr/>
             <Routes>
-                <Route exact path="/" element={<Home/>}/>
-
-
+                <Route exact path="/" element={<BrokersComponent id="home" />}/>
                 <Route path="/about" element = {<About/>}/>
-
                 <Route path="*" element = {<NoMatch/>}/>
-
             </Routes>
         </div>
     </BrowserRouter>);
 }
 
 function Home() {
-    return <div><h3>Home</h3></div>
+
+    const [post, setPost] = React.useState([]);
+
+    React.useEffect(() => {
+        axios.get("http://localhost:8080/getAllBrokers").then((response) => {
+            setPost(response.data)
+        }
+        );
+
+
+    }, []);
+
+    console.log(post)
+    // const [users, setUsers] = useState([])
+    //
+    // useEffect(() => {
+    //     (async () => {
+    //         const data = await fetch(endpoint)
+    //             .then(res => res.json())
+    //
+    //         setUsers(data)
+    //     })()
+    // }, [])
+    // return <div>
+    //         <Broker value=post></Broker>
+    // </div>
 }
+
+function Broker(props){
+    return
+        <h3> {props.value.id} </h3>
+}
+
+
+
 
 function About() {
     return <div><h3>About</h3></div>

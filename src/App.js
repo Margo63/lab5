@@ -22,12 +22,12 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <button onClick={this.toggle} className={this.state.class}>{this.state.label}</button>
-                <form onSubmit={this.onSubmit}>
-                    <input type="text" value={this.state.text}
-                           placeholder="Текст" onChange={this.onChange}/>
-                    <input type="submit" value="Отправить"/><br/> <p>Отправлено: "<span>{this.state.outtext}</span>"</p>
-                </form>
+                {/*<button onClick={this.toggle} className={this.state.class}>{this.state.label}</button>*/}
+                {/*<form onSubmit={this.onSubmit}>*/}
+                {/*    <input type="text" value={this.state.text}*/}
+                {/*           placeholder="Текст" onChange={this.onChange}/>*/}
+                {/*    <input type="submit" value="Отправить"/><br/> <p>Отправлено: "<span>{this.state.outtext}</span>"</p>*/}
+                {/*</form>*/}
             </div>
 
     );
