@@ -4,6 +4,7 @@ import {BrowserRouter, Routes, Route, Link} from "react-router-dom";
 import App from "./App";
 import axios from "axios";
 import BrokersComponent from "./brokers.component";
+import StockComponent from "./stock.component";
 
 
 function BasicExample() {
@@ -11,12 +12,12 @@ function BasicExample() {
         <div>
             <ul>
                 <li><Link to="/">Brokers</Link></li>
-                <li><Link to="/about">Stocks</Link></li>
+                <li><Link to="/stock">Stocks</Link></li>
             </ul>
             <hr/>
             <Routes>
                 <Route exact path="/" element={<BrokersComponent id="home" />}/>
-                <Route path="/about" element = {<About/>}/>
+                <Route path="/stock" element = {<StockComponent/>}/>
                 <Route path="*" element = {<NoMatch/>}/>
             </Routes>
         </div>
