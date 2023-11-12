@@ -26,6 +26,28 @@ const TradingComponent = () => {
 
 
             setStocks(data)
+            let tr = []
+            listTradings.forEach((el)=>{
+                const index = data.map((g) => {
+                    return g.id;
+                }).indexOf(el);
+                if(index>-1){
+                    tr.push({ id: data[index].id, name: data[index].name, prices: data[index].data })
+                    // setTrading([
+                    //     ...trading,
+                    //     { id: data[index].id, name: data[index].name }
+                    // ]);
+                    //
+                    // console.log(el, [
+                    //     ...trading,
+                    //     { id: data[index].id, name: data[index].name }
+                    // ])
+
+                }
+
+            })
+
+            setTrading(tr)
 
         })()
     }, [])
@@ -33,56 +55,56 @@ const TradingComponent = () => {
 
     const clickStart = ()=>{
         console.log("start")
-        setTrading([])
-
+        //setTrading([])
+        console.log(trading)
         setIntervalID(setInterval(()=>{
-            console.log()
-            setTrading([])
-
-            listTradings.forEach((el)=>{
-                const index = stocks.map((g) => {
-                    return g.id;
-                }).indexOf(el);
-                if(index>-1){
-
-                    setTrading([
-                        ...trading,
-                        { id: stocks[index].id, name: stocks[index].name }
-                    ]);
-
-                    console.log(el, trading)
-                    // console.log([...trading, {
-                    //     "id":stocks[index].id,
-                    //     "name":stocks[index].name,
-                    //     "price":stocks[index].data[indexData].Open
-                    // }])
-
-                    // trading[stocks[index].id] = {
-                    //     "name":stocks[index].name,
-                    //     "price":stocks[index].data[indexData].Open
-                    // }
-                    // trading = [...trading, {
-                    //     "name":stocks[index],
-                    //     "price":stocks[index].data[indexData].Open
-                    // }]
-                }
-
-                // setTrading(trading[el] = {
-                //     "name":stocks[index],
-                //     "price":stocks[index].data[indexData].Open
-                // }
-                // )
-
-                // setTrading(trading[]({
-                //     "name":stocks[index],
-                //     "id":el,
-                //     "price":stocks[index].data[indexData].Open
-                // }))
-                //trade[el] = stocks[index].data[indexData].Open;
-            })
-            //setTrading(getData())
-
-            console.log(trading)
+            // console.log()
+            // setTrading([])
+            //
+            // listTradings.forEach((el)=>{
+            //     const index = stocks.map((g) => {
+            //         return g.id;
+            //     }).indexOf(el);
+            //     if(index>-1){
+            //
+            //         setTrading([
+            //             ...trading,
+            //             { id: stocks[index].id, name: stocks[index].name }
+            //         ]);
+            //
+            //         console.log(el, trading)
+            //         // console.log([...trading, {
+            //         //     "id":stocks[index].id,
+            //         //     "name":stocks[index].name,
+            //         //     "price":stocks[index].data[indexData].Open
+            //         // }])
+            //
+            //         // trading[stocks[index].id] = {
+            //         //     "name":stocks[index].name,
+            //         //     "price":stocks[index].data[indexData].Open
+            //         // }
+            //         // trading = [...trading, {
+            //         //     "name":stocks[index],
+            //         //     "price":stocks[index].data[indexData].Open
+            //         // }]
+            //     }
+            //
+            //     // setTrading(trading[el] = {
+            //     //     "name":stocks[index],
+            //     //     "price":stocks[index].data[indexData].Open
+            //     // }
+            //     // )
+            //
+            //     // setTrading(trading[]({
+            //     //     "name":stocks[index],
+            //     //     "id":el,
+            //     //     "price":stocks[index].data[indexData].Open
+            //     // }))
+            //     //trade[el] = stocks[index].data[indexData].Open;
+            // })
+            // //setTrading(getData())
+            //
+            // console.log(trading)
 
             if(indexData<1250)
                 indexData+=1;
@@ -122,7 +144,9 @@ const TradingComponent = () => {
 
                         <ul>
                             {trading.map(trad => (
-                                <li key={trad.id}>{trad.name}</li>
+                                <li key={trad.id}>{
+                                    trad.prices[change].Open
+                                }</li>
                             ))}
                         </ul>
 
