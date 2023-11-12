@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-
+import {useConnectSocket} from "./hooks/useConnectSocket";
 
 
 const TradingComponent = () => {
@@ -13,11 +13,9 @@ const TradingComponent = () => {
     const [speed, setSpeed] = useState(0)
     const [change, setChange] = useState(0)
 
-    //const [trading, setTrading] = useState([])
-    //let trading=[];
     let indexData = 0;
 
-
+    useConnectSocket()
     useEffect(() => {
 
         (async () => {
@@ -27,12 +25,12 @@ const TradingComponent = () => {
 
             setStocks(data)
             let tr = []
-            listTradings.forEach((el)=>{
+            listTradings.forEach((el) => {
                 const index = data.map((g) => {
                     return g.id;
                 }).indexOf(el);
-                if(index>-1){
-                    tr.push({ id: data[index].id, name: data[index].name, prices: data[index].data })
+                if (index > -1) {
+                    tr.push({id: data[index].id, name: data[index].name, prices: data[index].data})
                     // setTrading([
                     //     ...trading,
                     //     { id: data[index].id, name: data[index].name }
@@ -53,11 +51,12 @@ const TradingComponent = () => {
     }, [])
 
 
-    const clickStart = ()=>{
+    const clickStart = () => {
+
         console.log("start")
-        //setTrading([])
         console.log(trading)
-        setIntervalID(setInterval(()=>{
+        indexData = 0
+        setIntervalID(setInterval(() => {
             // console.log()
             // setTrading([])
             //
@@ -106,18 +105,19 @@ const TradingComponent = () => {
             //
             // console.log(trading)
 
-            if(indexData<1250)
-                indexData+=1;
+            if (indexData < 1250)
+                indexData += 1;
 
             setChange(indexData)
 
-        },speed))
+        }, speed))
 
     }
     const clickStop = () => {
 
         clearInterval(intervalID)
         setIntervalID(null)
+        //setChange(0)
     }
     const setSpeedChange = (e) => {
         setSpeed(e.target.value)
@@ -132,7 +132,7 @@ const TradingComponent = () => {
                     <label>Дата начала</label>
                 </div>
                 <div>
-                    <input type="number" onChange={ setSpeedChange} value={speed}/>
+                    <input type="number" onChange={setSpeedChange} value={speed}/>
                     <label>Скорость</label>
                 </div>
 
@@ -141,37 +141,17 @@ const TradingComponent = () => {
                 <h1>Trading data:</h1>
                 <div>
                     {
+                        change>0?(
+                            trading.map(trad => (
+                                <div key={trad.id} >
+                                    <>
+                                        {trad.name}
+                                        {trad.prices[change].Open}
+                                    </>
+                                </div>
+                            ))
+                        ):(<></>)
 
-                        <ul>
-                            {trading.map(trad => (
-                                <li key={trad.id}>{
-                                    trad.prices[change].Open
-                                }</li>
-                            ))}
-                        </ul>
-
-                        // (trading&&change)?(
-                        // trading.map((el)=>{
-                        //     console.log(el)
-                        //     return <div key={el.key}>
-                        //                      {el.key}
-                        //                      <></>
-                        //                      {el.value}
-                        //                  </div>
-                        // })
-                        //     ):
-                        //     (<div>Wait</div>)
-
-                        // stocks.map((el)=>{
-                        //     if(listTradings.includes(el.id)){
-                        //         return <div>
-                        //             {el.name}
-                        //             <></>
-                        //             {el.data[indexData].Open}
-                        //         </div>
-                        //     }
-                        //
-                        // })
                     }
 
 
@@ -184,6 +164,11 @@ const TradingComponent = () => {
 
 }
 
+// function Trade(props) {
+//     return(
+//
+//     )
+// }
 
 
 export default TradingComponent;
