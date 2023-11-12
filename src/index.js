@@ -4,12 +4,32 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import BasicExample from "./Components";
+import {createStore} from "@reduxjs/toolkit";
+import {Provider} from "react-redux";
 
+const defaultState =
+    {
+        listTrading:[]
+    };
+
+const reducer = (state = defaultState, action)=>{
+    switch (action.type) {
+        case "SAVE":
+            return {...state, listTrading: action.listTrading}
+        default:
+            return state
+    }
+}
+const store = createStore(reducer)
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
-      <BasicExample/>
+      <Provider store={store}>
+          <App />
+          <BasicExample/>
+      </Provider>
+
+
   </React.StrictMode>
 );
 

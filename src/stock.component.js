@@ -1,11 +1,13 @@
 import {useEffect, useState} from "react";
 import LineChart from "./line.component";
 import {CategoryScale, Chart, registerables} from "chart.js";
+import {useDispatch, useSelector} from "react-redux";
 
 
 const StockComponent = () => {
     const [stocks, setStocks] = useState([])
-
+    const dispatch = useDispatch()
+    const listTradings = []
     useEffect(() => {
 
         (async () => {
@@ -17,16 +19,35 @@ const StockComponent = () => {
         })()
     }, [])
 
+    const changeListTrading = (e) =>{
+
+
+        if(e.target.checked){
+            listTradings.push(e.target.value)
+        }else{
+            let index = listTradings.indexOf(e.target.value);
+            listTradings.splice(index,1);
+        }
+        console.log(listTradings)
+        dispatch({type:"SAVE", listTrading:listTradings})
+    }
 
     if (stocks?.length) {
         console.log(stocks)
         return (
             <div>
-                <h1>GET DATA:</h1>
-
+                <h1>Choose trading data:</h1>
                 <div>
                     {stocks.map(stock => {
-
+                        return <div key={stock.id}>
+                            <input type="checkbox" onChange={changeListTrading} value={stock.id}/>
+                            <label>{stock.id}</label>
+                        </div>
+                    })}
+                </div>
+                <h1>Stocks data:</h1>
+                <div>
+                    {stocks.map(stock => {
                         return <Stock key={stock.id} value={stock}></Stock>
                     })}
 
@@ -51,11 +72,11 @@ function Stock(props) {
     }
 
     const [chartData, setChartData] = useState({
-        labels: props.value.data.map((data) => data.Date),
+        labels: props.value.data.map((data) => data.Date).reverse(),
         datasets: [
             {
                 label: "Users Gained ",
-                data: props.value.data.map((data) => data.Open.match(/(\d+)/)[0]),
+                data: props.value.data.map((data) => data.Open.match(/(\d+)/)[0]).reverse(),
                 borderColor: "black",
                 borderWidth: 2
             }

@@ -5,6 +5,7 @@ import App from "./App";
 import axios from "axios";
 import BrokersComponent from "./brokers.component";
 import StockComponent from "./stock.component";
+import TradingComponent from "./trading.component";
 
 
 function BasicExample() {
@@ -13,11 +14,13 @@ function BasicExample() {
             <ul>
                 <li><Link to="/">Brokers</Link></li>
                 <li><Link to="/stock">Stocks</Link></li>
+                <li><Link to="/trading">Trading</Link></li>
             </ul>
             <hr/>
             <Routes>
                 <Route exact path="/" element={<BrokersComponent id="home" />}/>
                 <Route path="/stock" element = {<StockComponent/>}/>
+                <Route path="/trading" element = {<TradingComponent/>}/>
                 <Route path="*" element = {<NoMatch/>}/>
             </Routes>
         </div>
