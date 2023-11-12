@@ -10,5 +10,6 @@ export class SocketApi{
         this.socket.on('disconnect',()=>{
             console.log("disconnect")
         })
+
     }
 }
