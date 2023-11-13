@@ -11,14 +11,14 @@ import TradingComponent from "./trading.component";
 function BasicExample() {
     return (<BrowserRouter>
         <div>
-            <ul>
-                <li><Link to="/">Brokers</Link></li>
-                <li><Link to="/stock">Stocks</Link></li>
-                <li><Link to="/trading">Trading</Link></li>
-            </ul>
+            <div style={{background: "#FF4B3A", margin: 10, padding:10, borderRadius: 10}} >
+                <Link to="/" style={{padding:10, color:"white", fontSize:25}}>Brokers</Link>
+                <Link to="/stock" style={{padding:10, color:"white", fontSize:25}}>Stocks</Link>
+                <Link to="/trading" style={{padding:10, color:"white", fontSize:25}}>Trading</Link>
+            </div>
             <hr/>
             <Routes>
-                <Route exact path="/" element={<BrokersComponent id="home" />}/>
+                <Route exact path="/" element={<BrokersComponent id="home"/>}/>
                 <Route path="/stock" element = {<StockComponent/>}/>
                 <Route path="/trading" element = {<TradingComponent/>}/>
                 <Route path="*" element = {<NoMatch/>}/>

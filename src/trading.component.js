@@ -16,13 +16,12 @@ const TradingComponent = () => {
     const [change, setChange] = useState(0)
 
     useConnectSocket()
-    useEffect(()=>{
-        SocketApi.socket.on("trading",(data)=>{
-            console.log("trading"+data)
+    useEffect(() => {
+        SocketApi.socket.on("trading", (data) => {
+            console.log("trading" + data)
             setChange(data)
         })
-    },[])
-
+    }, [])
 
 
     useEffect(() => {
@@ -52,8 +51,8 @@ const TradingComponent = () => {
 
 
     const clickStart = () => {
-        if(speed>0 && date)
-            SocketApi.socket.emit("getData",{date,speed})
+        if (speed > 0 && date)
+            SocketApi.socket.emit("getData", {date, speed})
         console.log("start")
         console.log(trading)
 
@@ -130,31 +129,36 @@ const TradingComponent = () => {
     if (stocks?.length) {
         //console.log(stocks)
         return (
-            <div>
-                <div>
-                    <input type="date" onChange={setDateChange} value={date}/>
-                    <label>Дата начала</label>
-                </div>
-                <div>
-                    <input type="number" onChange={setSpeedChange} value={speed}/>
-                    <label>Скорость</label>
+            <div style={{padding: 10, margin: 10}}>
+                <div >
+                    <div>
+                        <label style={{margin: 10, fontSize: 18}}>Дата начала</label>
+                        <input type="date" onChange={setDateChange} value={date} style={{fontSize: 18}}/>
+                    </div>
+                    <div>
+                        <label style={{margin: 10, fontSize: 18}}>Скорость</label>
+                        <input type="number" onChange={setSpeedChange} value={speed} style={{fontSize: 18}}/>
+                    </div>
+
+                    <button onClick={clickStart} style={{fontSize: 18}}>START</button>
+                    <button onClick={clickStop} style={{fontSize: 18}}>STOP</button>
                 </div>
 
-                <button onClick={clickStart}>START</button>
-                <button onClick={clickStop}>STOP</button>
                 <h1>Trading data:</h1>
-                <div>
+                <div style={{backgroundColor:"#FF4B3A", color:"white", fontSize:18, padding:10, borderRadius:10}}>
                     {
-                        (change>0 && date && speed)?(
+                        (change > 0 && date && speed) ? (
                             trading.map(trad => (
-                                <div key={trad.id} >
+                                <div key={trad.id}>
                                     <>
-                                        {trad.name}
+                                        {trad.name}<br></br>
                                         {trad.prices[change].Open}
                                     </>
+                                    <br></br>
+                                    <br></br>
                                 </div>
                             ))
-                        ):(<></>)
+                        ) : (<></>)
 
                     }
 

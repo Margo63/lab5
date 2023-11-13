@@ -74,8 +74,8 @@ const BrokersComponent = () => {
     if (users?.length) {
         console.log(users)
         return (
-            <div>
-                <h1>GET DATA:</h1>
+            <div style={{paddingLeft: 20}}>
+                <h1>Brokers:</h1>
                 <AddBroker></AddBroker>
 
                 <div>
@@ -92,7 +92,7 @@ const BrokersComponent = () => {
 
 }
 
-function AddBroker(){
+function AddBroker() {
     const [openAdd, setOpenAdd] = useState(false);
 
     const [inputBalance, setInputBalance] = useState(0);
@@ -105,33 +105,35 @@ function AddBroker(){
     const handleToCloseAdd = async () => {
         console.log("new value" + inputName)
 
-        try {
-            const response = await fetch("http://localhost:8080/postBroker" , {
-                method: "POST",
-                body: JSON.stringify({
-                    "id":inputNickname,
-                    "name":inputName,
-                    "balance": inputBalance
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
+        if (inputName && inputNickname)
+
+            try {
+                const response = await fetch("http://localhost:8080/postBroker", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        "id": inputNickname,
+                        "name": inputName,
+                        "balance": inputBalance
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                    ,
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error! status: ${response.status}`);
                 }
-                ,
-            });
 
-            if (!response.ok) {
-                throw new Error(`Error! status: ${response.status}`);
+                const result = await response.json();
+
+                //console.log('result is: ', JSON.stringify(result, null, 4));
+                if (result.mes === "success")
+
+                    console.log(result);
+            } catch (err) {
+                console.log(err.message);
             }
-
-            const result = await response.json();
-
-            //console.log('result is: ', JSON.stringify(result, null, 4));
-            if (result.mes === "success")
-
-                console.log(result);
-        } catch (err) {
-            console.log(err.message);
-        }
 
         setOpenAdd(false)
     }
@@ -145,21 +147,23 @@ function AddBroker(){
         setInputName(e.target.value)
     }
 
-    return(
+    return (
         <>
-            <button onClick={handleClickToOpenAdd}> Add</button>
-            <dialog open={openAdd}>
-                <p> Add user</p>
+            <button onClick={handleClickToOpenAdd}
+                    style={{background: "#FF4B3A", borderRadius: 10, fontSize: 20, color: "white"}}> Add
+            </button>
+            <dialog open={openAdd} style={{borderColor: "gray", borderRadius: 10, fontSize: 20}}>
+                <p>Add broker</p>
                 <form>
                     <input type="text" value={inputNickname}
-                           placeholder="nickname" onChange={onChangeNickname}/>
+                           placeholder="nickname" onChange={onChangeNickname} style={{fontSize: 18}}/>
                     <input type="text" value={inputName}
-                           placeholder="name" onChange={onChangeName}/>
+                           placeholder="name" onChange={onChangeName} style={{fontSize: 18}}/>
                     <input type="number" value={inputBalance}
-                           placeholder="Введите баланс" onChange={onChangeBalance}/>
+                           placeholder="Введите баланс" onChange={onChangeBalance} style={{fontSize: 18}}/>
                     <button
                         onClick={handleToCloseAdd}
-                        color="primary" autoFocus>
+                        color="primary" autoFocus style={{fontSize: 18}}>
                         Добавить
                     </button>
                 </form>
@@ -167,7 +171,7 @@ function AddBroker(){
 
             </dialog>
         </>
-        )
+    )
 }
 
 function Broker(props) {
@@ -261,19 +265,19 @@ function Broker(props) {
     }
 
     return (
-        <div>
+        <div style={{background: "#FF4B3A", padding: 10, borderRadius: 10, margin: 10, color: "white", fontSize: 20}}>
             <p> {props.value.name}</p>
             <p> {props.value.balance}</p>
-            <button onClick={handleClickToOpen}> Change</button>
-            <button onClick={handleToDelete} value={props.value.id}> Delete</button>
-            <dialog open={open}>
+            <button onClick={handleClickToOpen} style={{fontSize: 20}}> Change</button>
+            <button onClick={handleToDelete} value={props.value.id} style={{fontSize: 20}}> Delete</button>
+            <dialog open={open} style={{borderColor: "gray", borderRadius: 10}}>
                 <p> Изменить баланс пользователя: {props.value.name}</p>
                 <form>
                     <input type="number" value={inputText}
-                           placeholder="Введите баланс" onChange={onChange}/>
+                           placeholder="Введите баланс" onChange={onChange} style={{fontSize: 18}}/>
                     <button value={props.value.id}
                             onClick={handleToClose}
-                            color="primary" autoFocus>
+                            color="primary" autoFocus style={{fontSize: 18}}>
                         Изменить
                     </button>
                 </form>

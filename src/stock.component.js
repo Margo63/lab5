@@ -35,7 +35,7 @@ const StockComponent = () => {
     if (stocks?.length) {
         console.log(stocks)
         return (
-            <div>
+            <div style={{padding:10, margin:10}}>
                 <h1>Choose trading data:</h1>
                 <div>
                     {stocks.map(stock => {
@@ -106,17 +106,18 @@ function Stock(props) {
 
     return (
         <>
-            <div>
-                {props.value.id}
-                {props.value.name}
+            <div style={{backgroundColor:"#FF4B3A", padding:10, borderRadius:10, margin:10, fontSize:18, color:"white"}}>
+                {props.value.id}<br></br>
+                {props.value.name}<br></br>
+                <button onClick={handleClickOpen} style={{fontSize:18}}>График</button>
+                {open ? <div>
+                        <LineChart chartData={chartData} ></LineChart>
+                        <button onClick={handleClickClose} style={{fontSize:18}}>Close</button>
+                    </div>
+                    : null
+                }
             </div>
-            <button onClick={handleClickOpen}>График</button>
-            {open ? <div>
-                <LineChart chartData={chartData}></LineChart>
-                <button onClick={handleClickClose}>Close</button>
-            </div>
-            : null
-            }
+
 
         </>
     )
