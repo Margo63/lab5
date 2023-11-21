@@ -177,11 +177,12 @@ function AddBroker() {
 function Broker(props) {
     const [open, setOpen] = useState(false);
 
-    const [inputText, setInputText] = useState(0);
+    const [inputText, setInputText] = useState(props.value.balance);
 
     const handleClickToOpen = () => {
         setOpen(true);
     };
+
 
 
     // const Load = (id) =>{
@@ -270,11 +271,11 @@ function Broker(props) {
             <p> {props.value.balance}</p>
             <button onClick={handleClickToOpen} style={{fontSize: 20}}> Change</button>
             <button onClick={handleToDelete} value={props.value.id} style={{fontSize: 20}}> Delete</button>
-            <dialog open={open} style={{borderColor: "gray", borderRadius: 10}}>
+            <dialog open={open} style={{borderColor: "gray", borderRadius: 10}} >
                 <p> Изменить баланс пользователя: {props.value.name}</p>
                 <form>
                     <input type="number" value={inputText}
-                           placeholder="Введите баланс" onChange={onChange} style={{fontSize: 18}}/>
+                           placeholder="Введите баланс" onChange={onChange} style={{fontSize: 18}} />
                     <button value={props.value.id}
                             onClick={handleToClose}
                             color="primary" autoFocus style={{fontSize: 18}}>

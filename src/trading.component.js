@@ -51,8 +51,9 @@ const TradingComponent = () => {
 
 
     const clickStart = () => {
+
         if (speed > 0 && date)
-            SocketApi.socket.emit("getData", {date, speed})
+            SocketApi.socket.emit("getData", {date, speed,listTradings})
         console.log("start")
         console.log(trading)
 
@@ -115,8 +116,8 @@ const TradingComponent = () => {
     }
     const clickStop = () => {
         SocketApi.socket.emit("stop")
-        clearInterval(intervalID)
-        setIntervalID(null)
+        //clearInterval(intervalID)
+        //setIntervalID(null)
         //setChange(0)
     }
     const setSpeedChange = (e) => {
@@ -140,14 +141,14 @@ const TradingComponent = () => {
                         <input type="number" onChange={setSpeedChange} value={speed} style={{fontSize: 18}}/>
                     </div>
 
-                    <button onClick={clickStart} style={{fontSize: 18}}>START</button>
+                    <button onClick={clickStart} style={{fontSize: 18}}>Начать торги</button>
                     <button onClick={clickStop} style={{fontSize: 18}}>STOP</button>
                 </div>
 
                 <h1>Trading data:</h1>
                 <div style={{backgroundColor:"#FF4B3A", color:"white", fontSize:18, padding:10, borderRadius:10}}>
                     {
-                        (change > 0 && date && speed) ? (
+                        (change >= 0 && date && speed) ? (
                             trading.map(trad => (
                                 <div key={trad.id}>
                                     <>
